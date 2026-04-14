@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Processus de collaboration — Développement d'application</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0B1B2B;
+  --ink-soft: #1C2E42;
+  --paper: #F6F2EA;
+  --paper-soft: #EFE8D9;
+  --rule: #D4CBB8;
+  --accent: #C75B2B;
+  --accent-soft: #E8A07A;
+  --muted: #6B7787;
+  --highlight: #F4E4C8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter Tight', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+  font-weight: 400;
+  font-feature-settings: "ss01", "cv11";
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+/* ============ HEADER ============ */
+header {
+  border-bottom: 1px solid var(--rule);
+  padding: 32px 0;
+  background: var(--paper);
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.brand {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+}
+
+.meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-align: right;
+  line-height: 1.8;
+}
+
+/* ============ HERO ============ */
+.hero {
+  padding: 100px 0 80px;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  right: 48px;
+  width: 1px;
+  height: calc(100% - 80px);
+  background: var(--rule);
+}
+
+.hero-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero-label::before {
+  content: '';
+  width: 48px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  margin-bottom: 40px;
+  max-width: 15ch;
+}
+
+.hero h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent);
+}
+
+.hero-desc {
+  font-size: 18px;
+  max-width: 58ch;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-top: 72px;
+  padding-top: 40px;
+  border-top: 1px solid var(--rule);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stat-number {
+  font-family: 'Fraunces', serif;
+  font-size: 42px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+/* ============ SECTIONS ============ */
+section {
+  padding: 100px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.section-header {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 48px;
+  margin-bottom: 64px;
+  align-items: baseline;
+}
+
+.section-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  padding-top: 12px;
+  border-top: 2px solid var(--accent);
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.section-title em {
+  font-style: italic;
+  font-weight: 300;
+}
+
+.section-intro {
+  max-width: 64ch;
+  margin-left: 228px;
+  color: var(--ink-soft);
+  font-size: 17px;
+  margin-top: -40px;
+  margin-bottom: 64px;
+}
+
+/* ============ TIMELINE (7 phases) ============ */
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  background: var(--rule);
+  margin: 0 -8px;
+}
+
+.phase-card {
+  background: var(--paper);
+  padding: 32px 20px;
+  position: relative;
+  transition: all 0.4s ease;
+  cursor: default;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+}
+
+.phase-card:hover {
+  background: var(--paper-soft);
+}
+
+.phase-card.featured {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.phase-card.featured:hover {
+  background: var(--ink-soft);
+}
+
+.phase-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.phase-card.featured .phase-num {
+  color: var(--accent-soft);
+}
+
+.phase-name {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+
+.phase-duration {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.phase-card.featured .phase-duration {
+  color: var(--accent-soft);
+  border-bottom-color: rgba(232, 160, 122, 0.3);
+}
+
+.phase-desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  flex: 1;
+}
+
+.phase-card.featured .phase-desc {
+  color: rgba(246, 242, 234, 0.85);
+}
+
+/* ============ DETAIL BLOCK ============ */
+.detail-block {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 80px;
+  margin-top: 72px;
+  padding-top: 72px;
+  border-top: 1px solid var(--rule);
+}
+
+.detail-left {
+  position: sticky;
+  top: 32px;
+  align-self: start;
+}
+
+.detail-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.detail-label::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.detail-title {
+  font-family: 'Fraunces', serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+.detail-title em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent);
+}
+
+.detail-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 32px;
+  padding: 12px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.detail-lead {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.detail-right {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+
+.step:last-child { border-bottom: none; }
+
+.step-num {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.step-title {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: -0.005em;
+}
+
+.step-desc {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.step-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.step-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  background: var(--paper-soft);
+  border: 1px solid var(--rule);
+  color: var(--ink-soft);
+}
+
+/* ============ AGILE SECTION ============ */
+.agile-section {
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom: none;
+}
+
+.agile-section .section-number {
+  color: var(--accent-soft);
+  border-top-color: var(--accent-soft);
+}
+
+.agile-section .section-intro {
+  color: rgba(246, 242, 234, 0.75);
+}
+
+.agile-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-bottom: 80px;
+}
+
+.agile-quote {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.agile-quote em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--accent-soft);
+}
+
+.agile-principles {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.principle {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(246, 242, 234, 0.15);
+}
+
+.principle:last-child { border-bottom: none; }
+
+.principle-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--accent-soft);
+  letter-spacing: 0.1em;
+  padding-top: 4px;
+}
+
+.principle-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.principle-desc {
+  font-size: 13px;
+  color: rgba(246, 242, 234, 0.7);
+  line-height: 1.5;
+}
+
+/* ============ SPRINT CYCLE ============ */
+.sprint-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent-soft);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.sprint-title {
+  font-family: 'Fraunces', serif;
+  font-size: 42px;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: -0.015em;
+  margin-bottom: 60px;
+}
+
+.sprint-title em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent-soft);
+}
+
+.sprint-flow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  position: relative;
+  margin: 0 -8px;
+}
+
+.sprint-flow::before {
+  content: '';
+  position: absolute;
+  top: 42px;
+  left: 60px;
+  right: 60px;
+  height: 1px;
+  background: rgba(232, 160, 122, 0.3);
+  z-index: 0;
+}
+
+.sprint-step {
+  text-align: center;
+  padding: 0 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.sprint-dot {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  border: 2px solid var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent-soft);
+}
+
+.sprint-name {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.sprint-when {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-soft);
+  margin-bottom: 12px;
+}
+
+.sprint-desc {
+  font-size: 12px;
+  color: rgba(246, 242, 234, 0.7);
+  line-height: 1.5;
+}
+
+/* ============ TOOLS GRID ============ */
+.tools-section {
+  margin-top: 100px;
+  padding-top: 60px;
+  border-top: 1px solid rgba(246, 242, 234, 0.15);
+}
+
+.tools-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent-soft);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.tools-title {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 48px;
+  letter-spacing: -0.01em;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: rgba(246, 242, 234, 0.15);
+}
+
+.tool-item {
+  background: var(--ink);
+  padding: 28px 24px;
+  text-align: center;
+}
+
+.tool-category {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-soft);
+  margin-bottom: 12px;
+}
+
+.tool-name {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.tool-desc {
+  font-size: 12px;
+  color: rgba(246, 242, 234, 0.6);
+  line-height: 1.4;
+}
+
+/* ============ FOOTER ============ */
+footer {
+  padding: 60px 0 40px;
+  background: var(--paper);
+  text-align: center;
+}
+
+.footer-rule {
+  width: 60px;
+  height: 1px;
+  background: var(--accent);
+  margin: 0 auto 24px;
+}
+
+.footer-text {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+
+.footer-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1100px) {
+  .timeline { grid-template-columns: repeat(2, 1fr); }
+  .tools-grid { grid-template-columns: repeat(3, 1fr); }
+  .sprint-flow { grid-template-columns: repeat(2, 1fr); gap: 32px 0; }
+  .sprint-flow::before { display: none; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 24px; }
+  .section-header { grid-template-columns: 1fr; gap: 16px; }
+  .section-intro { margin-left: 0; }
+  .detail-block { grid-template-columns: 1fr; gap: 48px; }
+  .agile-hero { grid-template-columns: 1fr; gap: 40px; }
+  .timeline { grid-template-columns: 1fr; }
+}
+
+/* ============ PRINT ============ */
+@media print {
+  body { background: white; }
+  section { page-break-inside: avoid; padding: 40px 0; }
+  .agile-section { background: white; color: var(--ink); }
+  .agile-section .tool-item { background: white; border: 1px solid var(--rule); }
+  .phase-card.featured { background: var(--paper-soft); color: var(--ink); }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <div class="brand">geteam — Studio</div>
+      <div class="meta">
+        Document confidentiel<br>
+        Avril 2026
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-label">Note de méthodologie</div>
+    <h1>Notre processus <em>de collaboration</em>,<br>de la première idée<br>à la production.</h1>
+    <p class="hero-desc">
+      Un engagement structuré en sept phases. Notre méthodologie combine la discipline
+      d'un cadrage en amont avec l'agilité d'un développement itératif en
+      sprints courts, pour livrer un produit aligné avec votre vision.
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">07</div>
+        <div class="stat-label">Phases structurées</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">02</div>
+        <div class="stat-label">Semaines par sprint</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Transparence livrable</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">06</div>
+        <div class="stat-label">Mois de maintenance</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMELINE 7 PHASES ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">01 / Vue d'ensemble</div>
+      <h2 class="section-title">Les sept phases<br><em>de notre engagement.</em></h2>
+    </div>
+    <p class="section-intro">
+      Chaque phase produit un livrable concret, signé par les deux parties avant de
+      passer à la suivante. Les deux premières phases — qualification puis cadrage —
+      concentrent la majeure partie de notre valeur ajoutée conseil. Elles protègent
+      autant le client que le prestataire.
+    </p>
+
+    <div class="timeline">
+      <div class="phase-card featured">
+        <div class="phase-num">Phase 01</div>
+        <div class="phase-name">Qualification</div>
+        <div class="phase-duration">1—2 semaines</div>
+        <div class="phase-desc">Vérification du besoin, du budget, et du statut réglementaire du projet avant tout engagement.</div>
+      </div>
+
+      <div class="phase-card featured">
+        <div class="phase-num">Phase 02</div>
+        <div class="phase-name">Découverte & Cadrage</div>
+        <div class="phase-duration">2—6 semaines</div>
+        <div class="phase-desc">Ateliers approfondis pour transformer la vision en périmètre précis, chiffrable et réalisable.</div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-num">Phase 03</div>
+        <div class="phase-name">Proposition commerciale</div>
+        <div class="phase-duration">1—3 semaines</div>
+        <div class="phase-desc">Offre technique et financière détaillée, architecture cible, planning et conditions.</div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-num">Phase 04</div>
+        <div class="phase-name">Contractualisation</div>
+        <div class="phase-duration">1—4 semaines</div>
+        <div class="phase-desc">Signature du contrat de prestation, versement de l'acompte, lancement officiel du projet.</div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-num">Phase 05</div>
+        <div class="phase-name">Exécution Agile</div>
+        <div class="phase-duration">3—18 mois</div>
+        <div class="phase-desc">Développement en sprints de deux semaines, démonstrations régulières, ajustements continus.</div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-num">Phase 06</div>
+        <div class="phase-name">Recette & Production</div>
+        <div class="phase-duration">2—8 semaines</div>
+        <div class="phase-desc">Tests utilisateurs, déploiement progressif et mise en production.</div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-num">Phase 07</div>
+        <div class="phase-name">Maintenance</div>
+        <div class="phase-duration">Continu</div>
+        <div class="phase-desc">Support applicatif, corrections, évolutions fonctionnelles sous contrat de maintenance dédié.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PHASE 1 DETAIL ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">02 / Focus</div>
+      <h2 class="section-title">Phase 01<br><em>Qualification.</em></h2>
+    </div>
+
+    <div class="detail-block">
+      <div class="detail-left">
+        <div class="detail-label">Point de départ</div>
+        <h3 class="detail-title">Avant de chiffrer,<br><em>nous écoutons.</em></h3>
+        <div class="detail-meta">Durée · 1 à 2 semaines</div>
+        <p class="detail-lead">
+          La qualification est le filtre le plus important de tout le processus. Son objectif
+          n'est pas de vendre, mais de s'assurer que le projet est faisable, finançable et
+          conforme avant toute autre démarche. C'est cette étape qui évite aux deux parties
+          de s'engager dans un projet voué à l'échec.
+        </p>
+      </div>
+
+      <div class="detail-right">
+        <div class="step">
+          <div class="step-num">i.</div>
+          <div>
+            <div class="step-title">Réunion de découverte</div>
+            <div class="step-desc">Premier échange de 45 minutes pour comprendre le contexte, les objectifs, les contraintes et les attentes du client. Identification des interlocuteurs décisionnaires.</div>
+            <div class="step-tags">
+              <span class="step-tag">Visio ou présentiel</span>
+              <span class="step-tag">45 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">ii.</div>
+          <div>
+            <div class="step-title">Vérification du statut réglementaire</div>
+            <div class="step-desc">Étape critique pour tout projet fintech au Maroc. Le client dispose-t-il d'un agrément Bank Al-Maghrib, d'un partenariat avec un établissement agréé, ou est-il en cours d'agrément ? La réponse conditionne la suite.</div>
+            <div class="step-tags">
+              <span class="step-tag">Loi 103-12</span>
+              <span class="step-tag">BAM</span>
+              <span class="step-tag">CNDP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">iii.</div>
+          <div>
+            <div class="step-title">Qualification budgétaire et temporelle</div>
+            <div class="step-desc">Vérification de la cohérence entre le budget disponible, les délais annoncés et l'ampleur réelle du projet envisagé. Les attentes irréalistes sont clarifiées sans détour à ce stade.</div>
+            <div class="step-tags">
+              <span class="step-tag">Budget</span>
+              <span class="step-tag">Délais</span>
+              <span class="step-tag">Financement</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">iv.</div>
+          <div>
+            <div class="step-title">Fiche de qualification interne</div>
+            <div class="step-desc">Document formel résumant les réponses du client, évaluant le niveau de risque et aboutissant à une décision Go / No-Go assumée. En cas de Go, un NDA est immédiatement signé pour passer à la phase suivante.</div>
+            <div class="step-tags">
+              <span class="step-tag">Scoring</span>
+              <span class="step-tag">NDA</span>
+              <span class="step-tag">Décision Go/No-Go</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PHASE 2 DETAIL ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">03 / Focus</div>
+      <h2 class="section-title">Phase 02<br><em>Découverte & Cadrage.</em></h2>
+    </div>
+
+    <div class="detail-block">
+      <div class="detail-left">
+        <div class="detail-label">Cœur du travail</div>
+        <h3 class="detail-title">Transformer<br>une vision<br><em>en plan exécutable.</em></h3>
+        <div class="detail-meta">Durée · 2 à 6 semaines</div>
+        <p class="detail-lead">
+          Le cadrage est la phase où nous investissons le plus de temps de réflexion
+          stratégique. Son livrable — le document de cadrage signé — devient la
+          référence contractuelle du projet. Chaque ligne qui n'est pas écrite à ce
+          moment coûtera dix fois plus cher pendant le développement.
+        </p>
+      </div>
+
+      <div class="detail-right">
+        <div class="step">
+          <div class="step-num">i.</div>
+          <div>
+            <div class="step-title">Atelier Vision &amp; Business Model</div>
+            <div class="step-desc">Clarification des objectifs stratégiques, du modèle économique, de la cible utilisateur et du positionnement concurrentiel. Nous n'écrivons pas de spécifications tant que la vision n'est pas partagée.</div>
+            <div class="step-tags">
+              <span class="step-tag">Stratégie</span>
+              <span class="step-tag">Positionnement</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">ii.</div>
+          <div>
+            <div class="step-title">Atelier Parcours Utilisateurs</div>
+            <div class="step-desc">Cartographie détaillée des parcours clés : onboarding, vérification d'identité, création de compte, transactions, gestion des cas limites. Wireframes sommaires pour valider la compréhension.</div>
+            <div class="step-tags">
+              <span class="step-tag">UX</span>
+              <span class="step-tag">Wireframes</span>
+              <span class="step-tag">KYC</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">iii.</div>
+          <div>
+            <div class="step-title">Atelier Périmètre Fonctionnel</div>
+            <div class="step-desc">Liste exhaustive des fonctionnalités, priorisées selon la méthode MoSCoW (Must have / Should have / Could have / Won't have). Identification claire du MVP et des versions ultérieures.</div>
+            <div class="step-tags">
+              <span class="step-tag">MoSCoW</span>
+              <span class="step-tag">MVP</span>
+              <span class="step-tag">Roadmap</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">iv.</div>
+          <div>
+            <div class="step-title">Atelier Intégrations Techniques</div>
+            <div class="step-desc">Inventaire des partenaires techniques à intégrer : processeurs monétiques, opérateurs télécom, agrégateurs, services KYC, notifications. Évaluation des contraintes et coûts associés.</div>
+            <div class="step-tags">
+              <span class="step-tag">CMI / HPS</span>
+              <span class="step-tag">Opérateurs</span>
+              <span class="step-tag">KYC</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">v.</div>
+          <div>
+            <div class="step-title">Atelier Sécurité &amp; Conformité</div>
+            <div class="step-desc">Exigences réglementaires Bank Al-Maghrib, protection des données personnelles (loi 09-08, CNDP), conformité PCI-DSS si applicable, chiffrement, audit, conservation des logs et obligations de reporting.</div>
+            <div class="step-tags">
+              <span class="step-tag">BAM</span>
+              <span class="step-tag">PCI-DSS</span>
+              <span class="step-tag">CNDP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">vi.</div>
+          <div>
+            <div class="step-title">Document de Cadrage signé</div>
+            <div class="step-desc">Synthèse formelle de 20 à 60 pages incluant contexte, périmètre, architecture cible, intégrations, planning macro, hypothèses, exclusions et risques. Signé par les deux parties avant tout devis.</div>
+            <div class="step-tags">
+              <span class="step-tag">Livrable clé</span>
+              <span class="step-tag">Signé</span>
+              <span class="step-tag">Base contractuelle</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AGILE SECTION ============ -->
+<section class="agile-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">04 / Méthodologie</div>
+      <h2 class="section-title">Phase 05<br><em>L'exécution Agile.</em></h2>
+    </div>
+    <p class="section-intro">
+      Une fois le cadrage validé, nous entrons dans le cœur du développement. Notre
+      approche suit le cadre Scrum, adapté aux exigences de traçabilité et de conformité
+      des projets financiers. Livrer souvent, livrer visible, ajuster vite.
+    </p>
+
+    <div class="agile-hero">
+      <div class="agile-quote">
+        « Un produit qui se <em>construit avec vous</em>,<br>
+        pas un livrable qui tombe<br>
+        après six mois de silence. »
+      </div>
+
+      <div class="agile-principles">
+        <div class="principle">
+          <div class="principle-num">01</div>
+          <div>
+            <div class="principle-title">Sprints de deux semaines</div>
+            <div class="principle-desc">Des cycles courts qui transforment les priorités en livrables démontrables à intervalles réguliers.</div>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="principle-num">02</div>
+          <div>
+            <div class="principle-title">Démonstrations régulières</div>
+            <div class="principle-desc">À la fin de chaque sprint, vous voyez le produit fonctionner. Pas de mauvaise surprise en fin de projet.</div>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="principle-num">03</div>
+          <div>
+            <div class="principle-title">Backlog priorisé ensemble</div>
+            <div class="principle-desc">Le Product Owner côté client décide des priorités du sprint suivant en s'appuyant sur nos retours techniques.</div>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="principle-num">04</div>
+          <div>
+            <div class="principle-title">Transparence totale</div>
+            <div class="principle-desc">Tableau de bord partagé, accès aux outils de suivi, rapport hebdomadaire écrit sur l'avancement et les risques.</div>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="principle-num">05</div>
+          <div>
+            <div class="principle-title">Changements maîtrisés</div>
+            <div class="principle-desc">Toute modification du périmètre passe par une procédure formelle d'impact et d'avenant.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPRINT CYCLE -->
+    <div class="sprint-label">— Cycle d'un sprint —</div>
+    <h3 class="sprint-title">Cinq rendez-vous<br><em>par cycle de deux semaines.</em></h3>
+
+    <div class="sprint-flow">
+      <div class="sprint-step">
+        <div class="sprint-dot">i</div>
+        <div class="sprint-name">Sprint Planning</div>
+        <div class="sprint-when">Jour 1 — 2 h</div>
+        <div class="sprint-desc">Sélection des user stories à livrer durant le sprint. Engagement de l'équipe sur le périmètre.</div>
+      </div>
+
+      <div class="sprint-step">
+        <div class="sprint-dot">ii</div>
+        <div class="sprint-name">Daily Stand-up</div>
+        <div class="sprint-when">Chaque jour — 15 min</div>
+        <div class="sprint-desc">Point rapide : ce qui a été fait hier, ce qui sera fait aujourd'hui, les blocages identifiés.</div>
+      </div>
+
+      <div class="sprint-step">
+        <div class="sprint-dot">iii</div>
+        <div class="sprint-name">Revue Hebdomadaire</div>
+        <div class="sprint-when">Vendredi — 30 min</div>
+        <div class="sprint-desc">Reporting écrit partagé avec le client : avancement, risques, décisions en attente.</div>
+      </div>
+
+      <div class="sprint-step">
+        <div class="sprint-dot">iv</div>
+        <div class="sprint-name">Sprint Review</div>
+        <div class="sprint-when">Dernier jour — 1 h</div>
+        <div class="sprint-desc">Démonstration live des fonctionnalités livrées. Validation ou retours formalisés.</div>
+      </div>
+
+      <div class="sprint-step">
+        <div class="sprint-dot">v</div>
+        <div class="sprint-name">Rétrospective</div>
+        <div class="sprint-when">Dernier jour — 45 min</div>
+        <div class="sprint-desc">Revue interne de l'équipe pour améliorer les processus au sprint suivant.</div>
+      </div>
+    </div>
+
+    <!-- TOOLS -->
+    <div class="tools-section">
+      <div class="tools-label">— Outils partagés —</div>
+      <h3 class="tools-title">Votre accès permanent<br>au projet.</h3>
+
+      <div class="tools-grid">
+        <div class="tool-item">
+          <div class="tool-category">Design</div>
+          <div class="tool-name">Stitch</div>
+          <div class="tool-desc">Maquettes et prototypes</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-category">Gestion de projet</div>
+          <div class="tool-name">Jira</div>
+          <div class="tool-desc">Backlog, sprints, suivi des tâches</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-category">Code source</div>
+          <div class="tool-name">GitLab</div>
+          <div class="tool-desc">Dépôts sécurisés, accès client</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-category">Communication</div>
+          <div class="tool-name">Discord</div>
+          <div class="tool-desc">Canaux dédiés au projet</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-category">Documentation</div>
+          <div class="tool-name">Confluence</div>
+          <div class="tool-desc">Wiki technique et fonctionnel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-rule"></div>
+    <div class="footer-text">— Prêts à démarrer la conversation —</div>
+    <div class="footer-meta">geteam · contact@geteam.ai · Avril 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
