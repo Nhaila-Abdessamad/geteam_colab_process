@@ -72,6 +72,25 @@ header {
 }
 
 /* ============ HERO ============ */
+.hero-brand {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+  margin-bottom: 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero-brand::after {
+  content: '';
+  width: 120px;
+  height: 1px;
+  background: var(--rule);
+}
+
 .hero {
   padding: 100px 0 80px;
   border-bottom: 1px solid var(--rule);
@@ -707,16 +726,18 @@ footer {
 <header>
   <div class="container">
     <div class="header-inner">
-      <div class="brand">geteam — Studio</div>
+      <div class="brand">geteam — studio</div>
       <div class="meta">
         Avril 2026
       </div>
+
     </div>
   </div>
 </header>
 
 <section class="hero">
   <div class="container">
+    <div class="hero-brand">geteam</div>
     <div class="hero-label">Note de méthodologie</div>
     <h1>Notre processus <em>de collaboration</em>,<br>de la première idée<br>à la production.</h1>
     <p class="hero-desc">
@@ -1134,9 +1155,4 @@ footer {
   <div class="container">
     <div class="footer-rule"></div>
     <div class="footer-text">— Prêts à démarrer la conversation —</div>
-    <div class="footer-meta">geteam · contact@geteam.ai · Avril 2026</div>
-  </div>
-</footer>
-
-</body>
-</html>
+    <div class="footer-meta">geteam · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0
